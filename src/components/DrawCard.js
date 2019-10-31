@@ -1,24 +1,29 @@
 import React from "react";
 import { connect } from "react-redux";
 import { drawCard } from "../redux/action";
-import { getCards } from "../redux/selectors";
+import { getCards, getCardLength } from "../redux/selectors";
 
-const DrawCard = ({ cards, drawCard }) => (
+const DrawCard = ({ cards, cards_length, drawCard }) => (
   <div>
-    <button
-      className="btn--next"
-      onClick={() => {
-        drawCard(cards);
-      }}
-    >
-      ドロー
-    </button>
+    {cards && cards_length !== 0 ? (
+      <button
+        className="btn--next"
+        onClick={() => {
+          drawCard(cards);
+        }}
+      >
+        ドロー
+      </button>
+    ) : (
+      <p>おしまい</p>
+    )}
   </div>
 );
 
 const mapStateToProps = state => {
   return {
-    cards: getCards(state)
+    cards: getCards(state),
+    cards_length: getCardLength(state)
   };
 };
 
